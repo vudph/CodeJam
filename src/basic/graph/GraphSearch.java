@@ -1,8 +1,7 @@
-package basic;
+package basic.graph;
 
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
@@ -80,6 +79,8 @@ public class GraphSearch {
 //		gs.dfs(g, s);
 		gs.dfs(a, s);
 		gs.print();
+		
+		scanner.close();
 	}
 
 	private void bfs(int[][] a) {
