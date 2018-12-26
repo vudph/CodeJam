@@ -35,7 +35,7 @@ public class GraphSearch {
 	private int s;
 	private int e;
 	private int trace[];
-	private boolean free[];
+	private boolean visited[];
 	
 	private static final Scanner scanner = new Scanner(System.in);
 	
@@ -65,20 +65,20 @@ public class GraphSearch {
 		gs.m = m;
 		gs.s = s;
 		gs.e = e;
-		gs.free = new boolean[n];
-		Arrays.fill(gs.free, true);
+		gs.visited = new boolean[n];
+		Arrays.fill(gs.visited, false);
 		gs.trace = new int[n];
 		
-		gs.free[s] = false;
+		gs.visited[s] = true;
 		gs.trace[s] = -1;
 		
 //		gs.bfs(a);
-//		gs.bfs(g);
-//		gs.print();
+		gs.bfs(g);
+		gs.print();
 
 //		gs.dfs(g, s);
-		gs.dfs(a, s);
-		gs.print();
+//		gs.dfs(a, s);
+//		gs.print();
 		
 		scanner.close();
 	}
@@ -89,8 +89,8 @@ public class GraphSearch {
 		while (!q.isEmpty()) {
 			int u = q.poll();
 			for (int v = 0; v < n; v++) {
-				if (free[v] && a[u][v] == 1 && a[v][u] == 1) {
-					free[v] = false;
+				if (!visited[v] && a[u][v] == 1 && a[v][u] == 1) {
+					visited[v] = true;
 					trace[v] = u;
 					q.add(v);
 				}
@@ -104,8 +104,8 @@ public class GraphSearch {
 		while (!q.isEmpty()) {
 			int u = q.poll();
 			for (int v : g.getAdj(u)) {
-				if (free[v]) {
-					free[v] = false;
+				if (!visited[v]) {
+					visited[v] = true;
 					trace[v] = u;
 					q.add(v);
 				}
@@ -114,9 +114,9 @@ public class GraphSearch {
 	}
 	
 	private void dfs(int a[][], int u) {
-		free[u] = false;
+		visited[u] = true;
 		for (int v = 0; v < n; v++) {
-			if (free[v] && a[u][v] == 1 && a[v][u] == 1) {
+			if (!visited[v] && a[u][v] == 1 && a[v][u] == 1) {
 				trace[v] = u;
 				dfs(a, v);
 			}
@@ -124,9 +124,9 @@ public class GraphSearch {
 	}
 	
 	private void dfs(Graph g, int u) {
-		free[u] = false;
+		visited[u] = true;
 		for(int v : g.adj[u]) {
-			if (free[v]) {
+			if (!visited[v]) {
 				trace[v] = u;
 				dfs(g, v);
 			}
@@ -134,7 +134,7 @@ public class GraphSearch {
 	}
 	
 	private void print() {
-		if (free[e]) {
+		if (!visited[e]) {
 			System.out.println("Not found");
 			return;
 		}
