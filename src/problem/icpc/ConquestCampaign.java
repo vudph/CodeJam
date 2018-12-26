@@ -4,6 +4,9 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
+/*
+ * https://hanoi18.kattis.com/problems/conquestcampaign
+ */
 public class ConquestCampaign {
 	static class Cell {
 		int i, j;
