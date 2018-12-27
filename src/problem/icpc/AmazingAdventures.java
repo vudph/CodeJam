@@ -61,10 +61,10 @@ public class AmazingAdventures {
 		if (b2c.equals("NO")) {
 			return "NO";
 		}
-		for (int i = 0; i < n; i++) {
-			Arrays.fill(visited[i], false);
-		}
-		visited[u.i][u.j] = true;
+//		for (int i = 0; i < n; i++) {
+//			Arrays.fill(visited[i], false);
+//		}
+//		visited[u.i][u.j] = true;
 		visited[g.i][g.j] = false;
 		String c2g = findPath(c, g);
 		String path = c2g.equals("NO") ? "NO" : (b2c + c2g);
