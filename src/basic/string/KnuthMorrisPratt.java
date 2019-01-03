@@ -27,21 +27,20 @@ public class KnuthMorrisPratt {
 		// the loop calculates lps[i] for i = 1 to M-1
 		while (i < P.length()) {
 			if (P.charAt(i) == P.charAt(j)) {
-				j++;
-				i++;
-				S[i] = j;
+				S[i] = j + 1;
+				i = i + 1;
+				j = j + 1;
 			} else { // (pat[i] != pat[len])
 				// This is tricky. Consider the example.
 				// AAACAAAA and i = 7. The idea is similar
 				// to search step.
 				if (j != 0) {
 					j = S[j - 1];
-
 					// Also, note that we do not increment
 					// i here
 				} else { // if (len == 0)
 					S[i] = 0;
-					i++;
+					i = i + 1;
 				}
 			}
 		}
