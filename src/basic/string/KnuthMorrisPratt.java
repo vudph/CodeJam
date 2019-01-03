@@ -3,7 +3,7 @@ package basic.string;
 import java.util.Scanner;
 
 //http://www.personal.kent.edu/~rmuhamma/Algorithms/MyAlgorithms/StringMatch/kuthMP.htm
-
+//https://www.geeksforgeeks.org/kmp-algorithm-for-pattern-searching/
 public class KnuthMorrisPratt {
 	private static Scanner scanner = new Scanner(System.in);
 	private String T; // text
