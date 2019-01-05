@@ -7,28 +7,54 @@ import java.util.Scanner;
 public class KnuthMorrisPratt {
 	private static Scanner scanner = new Scanner(System.in);
 	
-	private int search(String pattern, String text) {
+	private void search(String pattern, String text) {
 	    int[] lsp = computeLspTable(pattern);
 	    
-	    int j = 0;  // Number of chars matched in pattern
-	    for (int i = 0; i < text.length(); i++) {
-	        while (j > 0 && text.charAt(i) != pattern.charAt(j)) {
-	            // Fall back in the pattern
-	            j = lsp[j - 1];  // Strictly decreasing
-	        }
-	        if (text.charAt(i) == pattern.charAt(j)) {
-	            // Next char matched, increment position
-	            j++;
-	            if (j == pattern.length()) {
-	                int pos = i - (j - 1);
-	                System.out.println(pos);
-	                j = 0;
-	            }
-	            
-	        }
-	    }
-	    
-	    return -1;  // Not found
+	    int i = 0; // index for txt[]
+	    int j = 0; // index for pat[] 
+        while (i < text.length()) { 
+            if (pattern.charAt(j) == text.charAt(i)) { 
+                j++; 
+                i++; 
+            } 
+            if (j == pattern.length()) { 
+                System.out.println("Found pattern at index " + (i - j)); 
+                j = lsp[j - 1]; 
+            } 
+            // mismatch after j matches 
+            else if (i < text.length() && pattern.charAt(j) != text.charAt(i)) { 
+            	if (j != 0) 
+                    j = lsp[j - 1]; 
+                else
+                    i = i + 1; 
+            } 
+        }
+//        abc abcdab abcdabcdabdabcdabdaef
+//        abcdabda (i=3, j=3)
+//           abcdabda (i=3, j=0)
+//            abcdabda (i=4, j=0)
+//		      abcdabda (i=10, j=6)
+//                abcdabda (i=10, j=2)
+//                 abcdabda (i=10, j=1)
+//                  abcdabda (i=10, j=0)
+//					 abcdabda (i=11, j=0)
+//		             abcdabda (i=17, j=6)
+//                       abcdabda (i=17, j=2)
+//                       abcdabda (i=22, j=7) => matched
+
+//        abc abcdab abcdabcdabdabcdabdaxzef
+//                              abcdabda (i=22, j=0)
+//                              abcdabda (i=29, j=7) => matched
+//                                     abcdabda (i=29, j=0)
+//                                     abcdabda (i=30, j=1)
+//                                     abcdabda (i=30, j=0)
+//                                       abcdabda (i=31, j=0)
+//                                        abcdabda (i=32, j=0)
+//                                         abcdabda (i=33, j=0)
+//                                           abcdabda (i=34, j=0) => stop
+//        a b c d a b d a
+//        0 1 2 3 4 5 6 7
+//        0 0 0 0 1 2 0 1
 	}
 	
 	private int[] computeLspTable(String pattern) { // the longest suffix-prefix
@@ -36,8 +62,10 @@ public class KnuthMorrisPratt {
 		lsp[0] = 0;
 		for (int i = 1; i < pattern.length(); i++) {
 			int j = lsp[i - 1];
-			while (j > 0 && pattern.charAt(i) != pattern.charAt(j))
-				j = lsp[j - 1];
+			while (j > 0 && pattern.charAt(i) != pattern.charAt(j)) {
+				j = lsp[j - 1]; // in worst case, this instruction will be called (pattern.length - 1) times
+//				System.out.print(j + ",");
+			}
 			if (pattern.charAt(i) == pattern.charAt(j)) {
 				j++;
 			}
@@ -61,8 +89,7 @@ public class KnuthMorrisPratt {
 		KnuthMorrisPratt kmp = new KnuthMorrisPratt();
 		String text = scanner.nextLine(); //abc abcdab abcdabcdabdabcdabdaef
 		String pattern = scanner.nextLine(); // abcdabda  AAACAAAA
-		int pos = kmp.search(pattern, text);
-		System.out.println(pos);
+		kmp.search(pattern, text);
 
 		
 	}
