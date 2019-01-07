@@ -1,4 +1,4 @@
-package basic.string;
+package basic.string.patternsearching;
 
 import java.util.Scanner;
 
@@ -20,9 +20,7 @@ public class KnuthMorrisPratt {
             if (j == pattern.length()) { 
                 System.out.println("Found pattern at index " + (i - j)); 
                 j = lsp[j - 1]; 
-            } 
-            // mismatch after j matches 
-            else if (i < text.length() && pattern.charAt(j) != text.charAt(i)) { 
+            } else if (i < text.length() && pattern.charAt(j) != text.charAt(i)) { // mismatch after j matches
             	if (j != 0) 
                     j = lsp[j - 1]; 
                 else
@@ -58,6 +56,7 @@ public class KnuthMorrisPratt {
 	}
 	
 	private int[] computeLspTable(String pattern) { // the longest suffix-prefix
+		//lsp[i] = longest proper prefix of P[i], and that is also a suffix of P[i]
 		int lsp[] = new int[pattern.length()];
 		lsp[0] = 0;
 		for (int i = 1; i < pattern.length(); i++) {
