@@ -86,13 +86,18 @@ public class ShortestPalindrome {
 		/*
 		 	a b c d $ d c b a
 			0 0 0 0 0 0 0 0 1
+			=> shortest: dcbabcd
+			=> longest : dcbaabcd
 			
 			a a a a b $ b a a a a
 			0 1 2 3 0 0 0 1 2 3 4
+			=> shortest: baaaab
+			=> longest : baaaaaaaab
 			
 			a b c b a b c a b $ b a c b a b c b a
 			0 0 0 0 1 2 3 1 2 0 0 1 0 0 1 2 3 4 5
-		 
+		 	=> shortest: bacbabcbabcab
+		 	=> longest : bacbabcbaabcbabcab
 		 */
 		
 	}
