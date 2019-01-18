@@ -71,17 +71,29 @@ public class ShortestPalindrome {
 		
 		String ss = s + "$" + rev;
 		
-		int lastPrefix = computeLspTable(ss)[ss.length() - 1];
+		int lastPrefix = computeLspTable(ss)[ss.length() - 1]; //the largest suffix of the reversed string that matches the prefix of the original string
 		
 		return rev.substring(0, rev.length() - lastPrefix) + s;
 	}
 
 	public static void main(String[] args) {
 //		System.out.println(isPalindrome("abcdadcba"));
-		String s = "aaaab";
+		String s = "aaaab"; // baaaa
 		System.out.println(shortestPalindrome(s));
 		System.out.println(shortestPalindromeRev(s));
 		System.out.println(shortestPalindromeKmp(s));
+		
+		/*
+		 	a b c d $ d c b a
+			0 0 0 0 0 0 0 0 1
+			
+			a a a a b $ b a a a a
+			0 1 2 3 0 0 0 1 2 3 4
+			
+			a b c b a b c a b $ b a c b a b c b a
+			0 0 0 0 1 2 3 1 2 0 0 1 0 0 1 2 3 4 5
+		 
+		 */
 		
 	}
 
