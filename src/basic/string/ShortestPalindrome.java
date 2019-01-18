@@ -37,7 +37,7 @@ public class ShortestPalindrome {
 		return true;
 	}
 	
-	public static String shortestPalindrome1(String s) {
+	public static String shortestPalindromeRev(String s) {
 		String rev = new StringBuilder(s).reverse().toString();
 		int n = s.length();
 		for (int i = 0; i < n; i++) {
@@ -65,34 +65,23 @@ public class ShortestPalindrome {
 		return lsp;
 	}
 	
-	private static String shortestPalindrome2(String s) {
+	private static String shortestPalindromeKmp(String s) {
+		//https://www.geeksforgeeks.org/minimum-characters-added-front-make-string-palindrome/
 		String rev = new StringBuilder(s).reverse().toString();
-        if (s.equals(rev))
-            return s;
-        int lps[] = new int[rev.length()];
-        int len = 0;
-        for (int i = 1; i < rev.length(); i++) {
-            while (len > 0 && rev.charAt(i) != s.charAt(len))
-                len = lps[len - 1];
-            if (rev.charAt(i) == s.charAt(len))
-                len++;
-            lps[i] = len;
-        }
-        return rev + s.substring(len, s.length() - len + 1);
+		
+		String ss = s + "$" + rev;
+		
+		int lastPrefix = computeLspTable(ss)[ss.length() - 1];
+		
+		return rev.substring(0, rev.length() - lastPrefix) + s;
 	}
 
 	public static void main(String[] args) {
 //		System.out.println(isPalindrome("abcdadcba"));
-		System.out.println(shortestPalindrome("abcab"));
-		System.out.println(shortestPalindrome1("abcab"));
-		System.out.println(shortestPalindrome2("abcab"));
-		String s = "abcdef";
-		System.out.println(s.substring(2));
-		System.out.println(s.substring(0, 2));
-		
-		String r = new StringBuilder(s).reverse().toString();
-		
-		int f[] = computeLspTable(s + "#" + r);
+		String s = "aaaab";
+		System.out.println(shortestPalindrome(s));
+		System.out.println(shortestPalindromeRev(s));
+		System.out.println(shortestPalindromeKmp(s));
 		
 	}
 
