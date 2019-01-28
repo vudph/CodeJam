@@ -1,6 +1,7 @@
 package basic.windowsliding;
 
 /*
+https://www.geeksforgeeks.org/window-sliding-technique/
 Given an array of integers of size ‘n’.
 Our aim is to calculate the maximum sum of ‘k’ 
 consecutive elements in the array.
