@@ -19,7 +19,7 @@ Explanation : The maximum difference is between 9 and 7.
 public class MaxDifference {
 	
 	private static int findMaxDiff(int a[]) {
-		int maxDiff = 0;
+		int maxDiff = Integer.MIN_VALUE;
 		//brute force => O(n*(n-1))
 //		for (int i = 0; i < a.length - 1; i++) {
 //			int s = a[i];
@@ -28,9 +28,16 @@ public class MaxDifference {
 //				maxDiff = Math.max(s, maxDiff);
 //			}
 //		}
-		// O(n)??
+		// hold min element and update max diff accordingly: O(n)
+//		int minEle = a[0];
+//		for (int i = 1; i < a.length; i++) {
+//			minEle = Math.min(minEle, a[i]);
+//			maxDiff = Math.max(maxDiff, a[i] - minEle);
+//		}
+//		return maxDiff;
 		
-		return maxDiff;
+		//window sliding
+		
 	}
 	
 	public static void main(String[] args) {
