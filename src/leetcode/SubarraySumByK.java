@@ -16,56 +16,11 @@ public class SubarraySumByK {
 			}
 		}
         
-//        int i = 0;
-//        while (i < nums.length && k < nums[i])
-//        	i++;
-//        int windowSum = k - nums[i];
-//        int offset = 0;
-//        int j = i + 1;
-//        while (j < nums.length) {
-//        	if (nums[j] == windowSum) {
-//        		cnt++;
-//        		i = j - offset;
-//        		windowSum = k - nums[i];
-//        		offset = 0;
-//        		System.out.println(j);
-//        		j = i + 1;
-//        	} else {
-//        		if (windowSum < 0) {
-//        			i = j;
-//        			offset = 0;
-//        			windowSum = k - nums[i];
-//        			j = i + 1;
-//        		} else {
-//        			windowSum -= nums[j];
-//        			offset++;
-//        			j++;
-//        		}
-//        	}
-//        }
-        
-//        for (int j = i + 1; j < nums.length - 1; j++) {
-//        	if (nums[j] == windowSum) {
-//        		cnt++;
-//        		i = j - offset;
-//        		windowSum = k - nums[i];
-//        		offset = 0;
-//        		j--;
-//        	} else {
-//        		windowSum -= nums[j];
-//        		offset++;
-//        		if (windowSum < 0) {
-//        			i = j + 1;
-//        			offset = 0;
-//        			windowSum = k - nums[i];
-//        		}
-//        	}
-//		}
         return cnt;
     }
 
 	public static void main(String[] args) {
-		int a[] = new int[]{0,0,0,0,0};
+		int a[] = new int[]{8, 5, 0, 3, 2, 0, 3, 6, 2, 1, 2, 0, 2, 9};
 		SubarraySumByK s = new SubarraySumByK();
 		System.out.println(s.subarraySum(a, 0));
 	}
