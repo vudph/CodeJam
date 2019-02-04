@@ -37,6 +37,53 @@ public class MinWindowContainsPattern {
 			return "";
 		if (t.length() > s.length())
 			return "";
+		
+		//brute force
+//		Map<Character, Integer> tmap = new HashMap<>();
+//		for (int i = 0; i < t.length(); i++) {
+//			if (!tmap.containsKey(t.charAt(i)))
+//				tmap.put(t.charAt(i), 1);
+//			else 
+//				tmap.put(t.charAt(i), tmap.get(t.charAt(i)) + 1);
+//		}
+//		
+//		int minLen = Integer.MAX_VALUE;
+//		int start = 0;
+//		int end = 0;
+//		for (int i = 0; i < s.length(); i++) {
+//			Map<Character, Integer> copy = new HashMap<>();
+//			copy.putAll(tmap);
+//			int tmpStart = 0;
+//			int tmpEnd = s.length() - 1;
+//			boolean sf = false;
+//			for (int j = i; j < s.length(); j++) {
+//				if (copy.containsKey(s.charAt(j))) {
+//					int cnt = copy.get(s.charAt(j));
+//					if (cnt == 1) {
+//						copy.remove(s.charAt(j));
+//					} else {
+//						cnt = cnt - 1;
+//						copy.put(s.charAt(j), cnt);
+//					}
+//					if (copy.isEmpty()) {
+//						if (!sf) {
+//							tmpStart = tmpEnd = j;
+//						}
+//						tmpEnd = j;
+//						if (minLen > (tmpEnd - tmpStart + 1)) {
+//							minLen = tmpEnd - tmpStart + 1;
+//							start = tmpStart;
+//							end = tmpEnd;
+//						}
+//						break;
+//					}
+//					if (!sf) {
+//						tmpStart = j;
+//						sf = true;
+//					}
+//				}
+//			}
+//		}
 		Map<Character, Integer> tmap = new HashMap<>();
 		for (int i = 0; i < t.length(); i++) {
 			if (!tmap.containsKey(t.charAt(i)))
@@ -47,41 +94,24 @@ public class MinWindowContainsPattern {
 		
 		int minLen = Integer.MAX_VALUE;
 		int start = 0;
-		int end = 0;
-		for (int i = 0; i < s.length(); i++) {
-			Map<Character, Integer> copy = new HashMap<>();
-			copy.putAll(tmap);
-			int tmpStart = 0;
-			int tmpEnd = s.length() - 1;
-			boolean sf = false;
-			for (int j = i; j < s.length(); j++) {
-				if (copy.containsKey(s.charAt(j))) {
-					int cnt = copy.get(s.charAt(j));
-					if (cnt == 1) {
-						copy.remove(s.charAt(j));
-					} else {
-						cnt = cnt - 1;
-						copy.put(s.charAt(j), cnt);
-					}
-					if (copy.isEmpty()) {
-						if (!sf) {
-							tmpStart = tmpEnd = j;
-						}
-						tmpEnd = j;
-						if (minLen > (tmpEnd - tmpStart + 1)) {
-							minLen = tmpEnd - tmpStart + 1;
-							start = tmpStart;
-							end = tmpEnd;
-						}
-						break;
-					}
-					if (!sf) {
-						tmpStart = j;
-						sf = true;
-					}
+		int end = s.length() - 1;
+		int l = 0;
+		int r = 0;
+		Map<Character, Integer> copy = new HashMap<>();
+		copy.putAll(tmap);
+		while (r < s.length()) {
+			if (copy.containsKey(s.charAt(r))) {
+				int cnt = copy.get(s.charAt(r));
+				if (cnt == 1) {
+					copy.remove(s.charAt(r));
+				} else {
+					cnt = cnt - 1;
+					copy.put(s.charAt(r), cnt);
+				}
+				if (copy.isEmpty()) {
 				}
 			}
-			
+			r++;
 		}
 		
 		return minLen == Integer.MAX_VALUE ? "" : s.substring(start, end + 1);
