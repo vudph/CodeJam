@@ -33,16 +33,34 @@ public class FindDisappearedNumbers {
 //			if (!appears[i])
 //				res.add(i + 1);
 //		}
+        
+        //update the input array
+//        for (int i = 0; i < nums.length; i++) {
+//        	if (nums[Math.abs(nums[i]) - 1] > 0)
+//        		nums[Math.abs(nums[i]) - 1] = nums[Math.abs(nums[i]) - 1] * (-1);
+//		}
+        
+        //set appeared element = -1 
         for (int i = 0; i < nums.length; i++) {
-        	if (nums[Math.abs(nums[i]) - 1] > 0)
-        		nums[Math.abs(nums[i]) - 1] = nums[Math.abs(nums[i]) - 1] * (-1);
+        	if (nums[i] != -1) {
+        		setAppeared(nums[i], nums);
+			}
 		}
+        
         for (int i = 0; i < nums.length; i++) {
 			if (nums[i] > 0)
 				res.add(i + 1);
 		}
         return res;
     }
+	
+	private void setAppeared(int i, int nums[]) {
+		if (nums[i - 1] != -1) {
+			int bk = nums[i - 1];
+			nums[i - 1] = -1;
+			setAppeared(bk, nums);
+		}
+	}
 
 	public static void main(String[] args) {
 		new FindDisappearedNumbers().findDisappearedNumbers(new int[]{4,3,2,7,8,2,3,1});
