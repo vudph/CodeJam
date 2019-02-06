@@ -63,7 +63,7 @@ public class FindDisappearedNumbers {
 	}
 
 	public static void main(String[] args) {
-		new FindDisappearedNumbers().findDisappearedNumbers(new int[]{4,3,2,7,8,2,3,1});
+//		new FindDisappearedNumbers().findDisappearedNumbers(new int[]{4,3,2,7,8,2,3,1});
 	}
 
 }
