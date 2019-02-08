@@ -26,22 +26,7 @@ public class HouseRobber {
         if (nums.length < 2)
             return nums[0];        
 
-        int finalMax = nums[0];
         
-        for (int offset = 2; offset < nums.length; offset++) {
-			for (int i = 2; i < nums.length; i += offset) {
-				
-			}
-		}
-        
-        for (int i = 2; i < nums.length; i++) {
-        	int currMax = nums[0];
-			for (int j = i; j < nums.length; j += i) {
-				currMax += nums[j];
-			}
-			finalMax = Math.max(finalMax, currMax);
-		}
-        return finalMax;
 	}
 
 	public static void main(String[] args) {
