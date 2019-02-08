@@ -25,7 +25,14 @@ public class HouseRobber {
             return 0;
         if (nums.length < 2)
             return nums[0];        
-
+        int max1 = nums[0];
+        int max2 = nums[1];
+        for (int i = 2; i < nums.length; i++) {
+        	int tmp = max2;
+			max2 = Math.max(max2 - nums[i - 1] + nums[i], max1 + nums[i]);
+			max1 = tmp;
+		}
+        return Math.max(max1, max2);
         
 	}
 
