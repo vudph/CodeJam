@@ -16,26 +16,24 @@ public class LongestIncreasingSubsequence {
 		if (nums == null || nums.length == 0)
 			return 0;
 		int finalLongest = 1;
-		//brute force
-		for (int i = 0; i < nums.length - 1; i++) {
-			int currentLongest = 1;
-			int maxTmp = nums[i];
-			for (int j = i + 1; j < nums.length; j++) {
-				if (nums[j] > nums[i]) {
-					if (nums[j] > maxTmp) {
-						currentLongest++;
-					} else {
-						maxTmp = nums[j];
-					}
+		int dp[] = new int[nums.length];
+		dp[0] = 1;
+		for (int i = 1; i < nums.length; i++) {
+			int currLongest = 1;
+			for (int j = i - 1; j >= 0; j--) {
+				if (nums[j] < nums[i]) {
+					currLongest = Math.max(currLongest, dp[j] + 1);
 				}
-				finalLongest = Math.max(finalLongest, currentLongest);
 			}
+			dp[i] = currLongest;
+			finalLongest = Math.max(finalLongest, currLongest);
 		}
+		
 		return finalLongest;
     }
 
 	public static void main(String[] args) {
-		int nums[] = {10,9,2,5,3,7,101,18};//{10,9,2,5,3,4};
+		int nums[] = {7,2,2,2,2,1,3,0,4,2,5,7,6,8};//{10,9,2,5,3,4};
 		LongestIncreasingSubsequence l = new LongestIncreasingSubsequence();
 		System.out.println(l.lengthOfLIS(nums));
 	}
