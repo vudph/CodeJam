@@ -25,13 +25,50 @@ The total cost is 11 and there is no possible way of paying less.
 public class BusTicketCost {
 
 	public int findCost(int a[]) {
+		if (a == null || a.length == 0)
+			return 0;
 		
-		return -1;
+		int cost[] = new int[31];
+		for (int i = 0; i < a[0]; i++) {
+			cost[i] = 0;
+		}
+		cost[a[0]] = 2;
+		for (int i = 1; i < a.length; i++) {
+			for (int j = a[i-1] + 1; j < a[i]; j++) {
+				cost[j] = cost[j-1];
+			}
+//			Raw DP: minCost(cost[i - 1] + 2, cost[a[i] - 7 + 1] + 7, cost[a[i] - 25 + 1] + 25);
+			cost[a[i]] = minCost(cost, a[i]);
+		}
+		for (int i = a[a.length - 1] + 1; i < 31; i++) {
+			cost[i] = cost[i - 1];
+		}
+		return cost[30];
 	}
-	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+	private int minCost(int cost[], int i) {
+		if (i <= 7)
+			return Math.min(cost[i-1] + 2, 7);
+		if (i <= 25)
+			return Math.min(cost[i-1] + 2, cost[i-7+1] + 7);
+		return Math.min(Math.min(cost[i-1] + 2, cost[i-7+1] + 7), cost[i-25+1] + 25);
+	}
 
+	private int minCost(int cost[], int a, int b, int c) {
+		if (b < 0)
+			return cost[a] + 2;
+		if (c < 0)
+			return Math.min(cost[a] + 2, cost[b] + 7);
+		return Math.min(Math.min(cost[a] + 2, cost[b] + 7), cost[c] + 25);
+	}
+
+	public static void main(String[] args) {
+		//1, 2, 4, 5, 7, 29, 30
+		//1,2,7,8,9,13,14,15,16,17,19,20,23,27,29,30
+		//1,2,7,8,9,13,14,15,16,17,19,20,23,27,29,30
+		//5,7,9,15,25
+		//5,25,27,28,30
+		int a[] = new int[] {1, 7, 8, 9, 10, 15, 16, 17, 18, 21, 25 };
+		System.out.println(new BusTicketCost().findCost(a));
 	}
 
 }
