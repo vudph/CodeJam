@@ -45,20 +45,13 @@ public class BusTicketCost {
 		}
 		return cost[30];
 	}
+	
 	private int minCost(int cost[], int i) {
 		if (i <= 7)
 			return Math.min(cost[i-1] + 2, 7);
 		if (i <= 25)
 			return Math.min(cost[i-1] + 2, cost[i-7+1] + 7);
 		return Math.min(Math.min(cost[i-1] + 2, cost[i-7+1] + 7), cost[i-25+1] + 25);
-	}
-
-	private int minCost(int cost[], int a, int b, int c) {
-		if (b < 0)
-			return cost[a] + 2;
-		if (c < 0)
-			return Math.min(cost[a] + 2, cost[b] + 7);
-		return Math.min(Math.min(cost[a] + 2, cost[b] + 7), cost[c] + 25);
 	}
 
 	public static void main(String[] args) {
