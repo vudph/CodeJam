@@ -60,7 +60,7 @@ public class BusTicketCost {
 		//1,2,7,8,9,13,14,15,16,17,19,20,23,27,29,30
 		//5,7,9,15,25
 		//5,25,27,28,30
-		int a[] = new int[] {1, 7, 8, 9, 10, 15, 16, 17, 18, 21, 25 };
+		int a[] = new int[] {1,2,3,8,9,12,13,15,17,18,19,24,25};
 		System.out.println(new BusTicketCost().findCost(a));
 	}
 
