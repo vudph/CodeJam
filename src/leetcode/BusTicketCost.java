@@ -37,7 +37,7 @@ public class BusTicketCost {
 			for (int j = a[i-1] + 1; j < a[i]; j++) {
 				cost[j] = cost[j-1];
 			}
-//			Raw DP: minCost(cost[i - 1] + 2, cost[a[i] - 7 + 1] + 7, cost[a[i] - 25 + 1] + 25);
+//			Raw DP: minCost(cost[i - 1] + 2, cost[a[i] - 7] + 7, cost[a[i] - 25] + 25);
 			cost[a[i]] = minCost(cost, a[i]);
 		}
 		for (int i = a[a.length - 1] + 1; i < 31; i++) {
@@ -50,8 +50,8 @@ public class BusTicketCost {
 		if (i <= 7)
 			return Math.min(cost[i-1] + 2, 7);
 		if (i <= 25)
-			return Math.min(cost[i-1] + 2, cost[i-7+1] + 7);
-		return Math.min(Math.min(cost[i-1] + 2, cost[i-7+1] + 7), cost[i-25+1] + 25);
+			return Math.min(cost[i-1] + 2, cost[i-7] + 7);
+		return Math.min(Math.min(cost[i-1] + 2, cost[i-7] + 7), 25);
 	}
 
 	public static void main(String[] args) {
@@ -60,7 +60,8 @@ public class BusTicketCost {
 		//1,2,7,8,9,13,14,15,16,17,19,20,23,27,29,30
 		//5,7,9,15,25
 		//5,25,27,28,30
-		int a[] = new int[] {1,2,3,8,9,12,13,15,17,18,19,24,25};
+		//1,2,3,8,9,12,13,15,17,18,19,24,25
+		int a[] = new int[] {1, 4, 7, 10, 13, 16, 19, 22, 25, 28};
 		System.out.println(new BusTicketCost().findCost(a));
 	}
 
