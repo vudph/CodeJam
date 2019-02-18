@@ -17,7 +17,11 @@ Input: [2,7,9,3,1]
 Output: 12
 Explanation: Rob house 1 (money = 2), rob house 3 (money = 9) and rob house 5 (money = 1).
              Total amount you can rob = 2 + 9 + 1 = 12.
-             
+ 4, 1, 1, 4
+ 4, 1, 5, 8
+ 
+ 2,7, 9, 3, 1
+ 2,7,11,10,12
  */
 public class HouseRobber {
 	public int rob(int[] nums) {
@@ -25,19 +29,27 @@ public class HouseRobber {
             return 0;
         if (nums.length < 2)
             return nums[0];        
-        int max1 = nums[0];
-        int max2 = nums[1];
+//        int max1 = nums[0];
+//        int max2 = nums[1];
+//        for (int i = 2; i < nums.length; i++) {
+//        	int tmp = max2;
+//			max2 = Math.max(max2 - nums[i - 1] + nums[i], max1 + nums[i]);
+//			max1 = tmp;
+//		}
+//        System.out.println(Math.max(max1, max2));
+        int dp[] = new int[nums.length];
+        dp[0] = nums[0];
+        dp[1] = nums[1];
         for (int i = 2; i < nums.length; i++) {
-        	int tmp = max2;
-			max2 = Math.max(max2 - nums[i - 1] + nums[i], max1 + nums[i]);
-			max1 = tmp;
+			dp[i] = Math.max(dp[i-1] - nums[i-1] + nums[i], dp[i-2] + nums[i]);
 		}
-        return Math.max(max1, max2);
-        
+        return Math.max(dp[dp.length-2], dp[dp.length-1]);
 	}
 
 	public static void main(String[] args) {
-		new HouseRobber().rob(new int[] {2,1,1,3,4,5,1,1,2,2,4,5,5,3,3,1,4});
+		//2,1,1,3,4,5,1,1,2,2,4,5,5,3,3,1,4
+		//4,1,1,4
+		System.out.println(new HouseRobber().rob(new int[] {2,7,9,3,1}));
 	}
 
 }
