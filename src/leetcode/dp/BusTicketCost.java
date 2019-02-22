@@ -1,4 +1,4 @@
-package leetcode;
+package leetcode.dp;
 /*
 https://leetcode.com/discuss/interview-question/124720/tickets-needed-to-get-minimum-cost
 The month has 30 days and there are three types of ticket:

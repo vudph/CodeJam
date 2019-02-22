@@ -1,4 +1,4 @@
-package leetcode;
+package leetcode.dp;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +58,7 @@ public class HouseRobberIII {
 		if (node != null) {
 			int l = postorder(node.left, max);
 			int r = postorder(node.right, max);
+			System.out.print(node.val + ", ");
 			max[0] = Math.max(node.val, (l + r));
 //			System.out.print(max + ", ");
 			return max[0];

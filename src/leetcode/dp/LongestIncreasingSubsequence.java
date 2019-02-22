@@ -1,4 +1,4 @@
-package leetcode;
+package leetcode.dp;
 /*
  https://leetcode.com/problems/longest-increasing-subsequence/
  Given an unsorted array of integers, find the length of longest increasing subsequence.
