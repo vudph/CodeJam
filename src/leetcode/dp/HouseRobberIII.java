@@ -1,7 +1,9 @@
 package leetcode.dp;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /*
 https://leetcode.com/problems/house-robber-iii/
@@ -49,19 +51,36 @@ public class HouseRobberIII {
 //			max1 = tmp;
 //		}
 //		return max1 > max2 ? max1 : max2;
-		int max[] = new int[1];
-		max[0] = 0;
-		return postorder(root, max);
+
+		return bruteForceMemorize(root, new HashMap<>());
 	}
 	
-	private int postorder(TreeNode node, int max[]) {
-		if (node != null) {
-			int l = postorder(node.left, max);
-			int r = postorder(node.right, max);
-			System.out.print(node.val + ", ");
-			max[0] = Math.max(node.val, (l + r));
-//			System.out.print(max + ", ");
-			return max[0];
+	private int bruteForce(TreeNode root) {
+		if (root != null) {
+			int val = 0;
+			if (root.left != null) 
+				val += bruteForce(root.left.left) + bruteForce(root.left.right);
+			if (root.right != null)
+				val += bruteForce(root.right.left) + bruteForce(root.right.right);
+
+			return Math.max(root.val + val, bruteForce(root.left) + bruteForce(root.right));
+		}
+		return 0;
+	}
+	
+	private int bruteForceMemorize(TreeNode root, Map<TreeNode, Integer> map) {
+		if (root != null) {
+			if (map.containsKey(root))
+				return map.get(root);
+			int val = 0;
+			if (root.left != null) 
+				val += bruteForceMemorize(root.left.left, map) + bruteForceMemorize(root.left.right, map);
+			if (root.right != null)
+				val += bruteForceMemorize(root.right.left, map) + bruteForceMemorize(root.right.right, map);
+
+			int max = Math.max(root.val + val, bruteForceMemorize(root.left, map) + bruteForceMemorize(root.right, map));
+			map.put(root, max);
+			return max;
 		}
 		return 0;
 	}
