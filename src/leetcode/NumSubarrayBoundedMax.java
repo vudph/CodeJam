@@ -18,19 +18,29 @@ Explanation: There are three subarrays that meet the requirements: [2], [2, 1], 
 public class NumSubarrayBoundedMax {
 
 	public int numSubarrayBoundedMax(int[] A, int L, int R) {
-		int count = 0;
 		int lp[] = new int[A.length];
 		for (int i = 0; i < A.length; i++) {
+			int cnt = 0;
 			for (int j = i; j < A.length; j++) {
-				
+				if (A[j] > R)
+					break;
+				if (cnt == 0 && A[j] < L) {
+					continue;
+				}
+				if (A[j] <= R)
+					cnt++;
 			}
+			if (i > 0)
+				lp[i] = lp[i-1] + cnt;
+			else 
+				lp[i] = cnt;
 		}
-		return count;
+		return lp[A.length-1];
     }
 
 	public static void main(String[] args) {
 		NumSubarrayBoundedMax c = new NumSubarrayBoundedMax();
-		System.out.println(c.numSubarrayBoundedMax(new int[] {2,9,1,5,6},2,8));
+		System.out.println(c.numSubarrayBoundedMax(new int[] {73,55,36,5,55,14,9,7,72,52},32,69));
 	}
 
 }
