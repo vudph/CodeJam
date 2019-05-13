@@ -27,7 +27,7 @@ public class ProductAllExceptSelf {
     }
 
 	public static void main(String[] args) {
-		int nums[] = {2, 3, 0, 4, 0};
+		int nums[] = {2, 3, 0, 4};
 		ProductAllExceptSelf p = new ProductAllExceptSelf();
 		p.productExceptSelf(nums);
 	}
