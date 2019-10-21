@@ -13,27 +13,37 @@ Explanation: The longest increasing subsequence is [2,3,7,101], therefore the le
 public class LongestIncreasingSubsequence {
 
 	public int lengthOfLIS(int[] nums) {
-		if (nums == null || nums.length == 0)
+		if (nums.length == 0)
 			return 0;
-		int finalLongest = 1;
 		int dp[] = new int[nums.length];
 		dp[0] = 1;
-		for (int i = 1; i < nums.length; i++) {
-			int currLongest = 1;
-			for (int j = i - 1; j >= 0; j--) {
-				if (nums[j] < nums[i]) {
-					currLongest = Math.max(currLongest, dp[j] + 1);
-				}
+		int maxLen = 1;
+		for(int i = 1; i < nums.length; i++) {
+			int currMaxLen = 1;
+			for (int j = i-1; j >= 0; j--) {
+				if (nums[j] < nums[i])
+					currMaxLen = Math.max(currMaxLen, dp[j] + 1);
 			}
-			dp[i] = currLongest;
-			finalLongest = Math.max(finalLongest, currLongest);
+			dp[i] = currMaxLen;
+			maxLen = Math.max(maxLen, currMaxLen);
 		}
-		
-		return finalLongest;
+		return maxLen;
     }
 
 	public static void main(String[] args) {
-		int nums[] = {7,2,2,2,2,1,3,0,4,2,5,7,6,8};//{10,9,2,5,3,4};
+		int nums[] = {4,10,4,11,8,9};//{10,9,2,5,3,4};
+//		7,2,2,2,2,1,3,0,4,2,5,7,6,8
+//		1,1,1,1,1,1,2,2,3,3,4,5,5,6
+		
+//		4,10,4,11,8,9
+//		1, 2,1, 3,3,4
+
+//		4,10,4,3,8,9
+//		1, 2,1,1,3,4
+		
+//		1,3,6,7,9,4,10,5,6
+//		1,2,3,4,5,3, 6,4,5
+		
 		LongestIncreasingSubsequence l = new LongestIncreasingSubsequence();
 		System.out.println(l.lengthOfLIS(nums));
 	}

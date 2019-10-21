@@ -12,7 +12,7 @@ public class HouseRobberIII {
 	
 	private int grab(TreeNode node, Map<TreeNode, Integer> cache) {
 		if (cache.containsKey(node)) {
-			System.out.println("hit " + node.val + ", v: " + cache.get(node));
+			System.out.println("hit " + node.val + ": " + cache.get(node));
 			cache.get(node);
 		}
 		if (node == null)
@@ -32,14 +32,16 @@ public class HouseRobberIII {
 	public static void main(String[] args) {
 		HouseRobberIII h = new HouseRobberIII();
 		TreeNode root = new TreeNode(4);
-//		root.left = new TreeNode(4);
-//		root.right = new TreeNode(5);
-//		root.left.left = new TreeNode(1);
-//		root.left.right = new TreeNode(3);
+		root.left = new TreeNode(4);
+		root.right = new TreeNode(5);
+		root.left.left = new TreeNode(1);
+		root.left.right = new TreeNode(3);
 		
-		root.left = new TreeNode(1);
-		root.left.left = new TreeNode(2);
-		root.left.left.left = new TreeNode(3);
+		root.right.right = new TreeNode(1);
+		
+//		root.left = new TreeNode(1);
+//		root.left.left = new TreeNode(2);
+//		root.left.left.left = new TreeNode(3);
 		System.out.println(h.rob(root));
 	}
 

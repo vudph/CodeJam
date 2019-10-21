@@ -53,16 +53,43 @@ public class BusTicketCost {
 			return Math.min(cost[i-1] + 2, cost[i-7] + 7);
 		return Math.min(Math.min(cost[i-1] + 2, cost[i-7] + 7), 25);
 	}
+	
+	private int minTicketCost(int days[]) {
+		if (days == null || days.length == 0)
+			return 0;
+		
+		int cost[] = new int[31];
+		for (int i = 0; i < days[0]; i++) {
+			cost[i] = 0;
+		}
+		for (int d = 1, i = 0; d < 31; d++) {
+			if (d != days[i]) {
+				cost[d] = cost[d - 1];
+			} else {
+				if (d > 7) {
+					cost[d] = Math.min(Math.min(cost[d - 1] + 2, cost[d - 7] + 7), 25);
+				} else {
+					cost[d] = Math.min(cost[d - 1] + 2, 7);
+				}
+				if (i < days.length - 1)
+					i++;
+			}
+		}
+		return cost[30];
+	}
 
 	public static void main(String[] args) {
-		//1, 2, 4, 5, 7, 29, 30
+		//1, 2, 4, 5, 7, 29, 30 => 11
 		//1,2,7,8,9,13,14,15,16,17,19,20,23,27,29,30
-		//1,2,7,8,9,13,14,15,16,17,19,20,23,27,29,30
-		//5,7,9,15,25
-		//5,25,27,28,30
-		//1,2,3,8,9,12,13,15,17,18,19,24,25
-		int a[] = new int[] {1, 4, 7, 10, 13, 16, 19, 22, 25, 28};
-		System.out.println(new BusTicketCost().findCost(a));
+		//1,2,7,8,9,13,14,15,16,17,19,20,23,27,29,30 => 25
+		//5,7,9,15,25 => 10
+		//5,25,27,28,30 => 9
+		//1,2,3,8,9,12,13,15,17,18,19,24,25 => 23
+		
+		//1, 4, 7, 10, 13, 16, 19, 22, 25, 28 => 20
+		
+		int a[] = new int[] {1,2,4,5,7,29,30};
+		System.out.println(new BusTicketCost().minTicketCost(a));
 	}
 
 }

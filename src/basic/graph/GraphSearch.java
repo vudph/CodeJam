@@ -42,6 +42,18 @@ public class GraphSearch {
 	
 	public static void main(String[] args) {
 		String[] nmse = scanner.nextLine().split(" ");
+		/*
+		8 9 0 7
+		0 1
+		0 2
+		1 2
+		1 3
+		2 4
+		2 6
+		3 5
+		5 6
+		6 7
+		*/
 		int n = Integer.parseInt(nmse[0]);
 		int m = Integer.parseInt(nmse[1]);
 		int s = Integer.parseInt(nmse[2]);
@@ -55,10 +67,10 @@ public class GraphSearch {
 			int u = Integer.parseInt(edge[0]);
 			int v = Integer.parseInt(edge[1]);
 			a[u][v] = 1;
-			a[v][u] = 1;
+//			a[v][u] = 1;
 			
 			g.addEdge(u, v);
-			g.addEdge(v, u);
+//			g.addEdge(v, u);
 		}
 		GraphSearch gs = new GraphSearch();
 		gs.n = n;
@@ -73,12 +85,12 @@ public class GraphSearch {
 		gs.trace[s] = -1;
 		
 //		gs.bfs(a);
-		gs.bfs(g);
-		gs.print();
+//		gs.bfs(g);
+//		gs.print();
 
 //		gs.dfs(g, s);
-//		gs.dfs(a, s);
-//		gs.print();
+		gs.dfs(a, s, e);
+		gs.print();
 		
 		scanner.close();
 	}
@@ -113,12 +125,13 @@ public class GraphSearch {
 		}
 	}
 	
-	private void dfs(int a[][], int u) {
+	private void dfs(int a[][], int u, int e) {
 		visited[u] = true;
+		if (u == e) return;
 		for (int v = 0; v < n; v++) {
 			if (!visited[v] && a[u][v] == 1 && a[v][u] == 1) {
+				dfs(a, v, e);
 				trace[v] = u;
-				dfs(a, v);
 			}
 		}
 	}
