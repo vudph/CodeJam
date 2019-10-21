@@ -6,6 +6,10 @@ import java.util.Map;
 /*
 https://leetcode.com/discuss/interview-question/365872/
 
+A=[51,71,17,42] => return 93. There are 2 pairs of numbers whose digits add up to an equal sum: (51,42) and (17,71)
+A=[42,33,60] => 102. Pair (42,60) digits of numbers add up to the same sum
+A=[51,32,43] => -1. All numbers have digits that add up to different, unique sums.
+
  */
 public class MaxSumOfPairDigits {
 
