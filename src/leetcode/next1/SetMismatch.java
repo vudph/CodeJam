@@ -1,4 +1,4 @@
-package leetcode;
+package leetcode.next1;
 
 /*
 https://leetcode.com/problems/set-mismatch/
