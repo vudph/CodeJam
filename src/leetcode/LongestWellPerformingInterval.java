@@ -76,6 +76,6 @@ public class LongestWellPerformingInterval {
 		LongestWellPerformingInterval l = new LongestWellPerformingInterval();
 		System.out.println(l.longestWellPerforming(new int[] {8,9,9,9,9}));
 		
+		
 	}
-
 }

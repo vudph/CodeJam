@@ -9,15 +9,14 @@ public class BinaryTreePruning {
     }
 
 	private TreeNode prunning(TreeNode node) {
-		if (node != null) {
-			node.left = prunning(node.left);
-			node.right = prunning(node.right);
-			if (node.val == 0 && (node.left == null && node.right == null)) {
-				return null;
-			}
-			return node;
+		if (node == null)
+			return null;
+		node.left = prunning(node.left);
+		node.right = prunning(node.right);
+		if (node.val == 0 && node.left == null && node.right == null) {
+			return null;
 		}
-		return null;
+		return node;
 	}
 
 	public static void main(String[] args) {

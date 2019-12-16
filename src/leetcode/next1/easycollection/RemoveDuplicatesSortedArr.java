@@ -1,5 +1,7 @@
 package leetcode.next1.easycollection;
 
+import java.util.Arrays;
+
 /*
 https://leetcode.com/problems/remove-duplicates-from-sorted-array/
 Given nums = [0,0,1,1,1,2,2,3,3,4],
@@ -16,10 +18,10 @@ public class RemoveDuplicatesSortedArr {
         int i = 0;
         for (int j = 1; j < nums.length; j++) {
         	if (nums[i] != nums[j]) {
-        		i++;
-        		nums[i] = nums[j];
+        		nums[++i] = nums[j];
         	}
 		}
+        nums = Arrays.copyOf(nums, i + 1);
         return i + 1;
     }
 	

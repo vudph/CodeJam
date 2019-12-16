@@ -57,8 +57,8 @@ public class RescueBoats {
 			if (i > j) 
 				break;
 			if (i + j <= limit) {
+				buckets[i]--;
 			}
-			buckets[i]--;
 			buckets[j]--;
 			boats++;
 		}

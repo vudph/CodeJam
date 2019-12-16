@@ -68,8 +68,9 @@ public class SetMismatch {
 	
 	public static void main(String[] args) {
 		SetMismatch sm = new SetMismatch();
-//		sm.findErrorNums(new int[] {2,1,2,4,3});
-		sm.cycleSort(new int[] {2,1,2,4,3});
+		sm.findErrorNums(new int[] {1,2,3,4,2});
+//		sm.cycleSort(new int[] {2,1,2,4,3});
+		
 	}
 
 }

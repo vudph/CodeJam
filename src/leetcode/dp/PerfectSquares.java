@@ -1,10 +1,5 @@
 package leetcode.dp;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Set;
-
 /*
 https://leetcode.com/problems/perfect-squares/
 

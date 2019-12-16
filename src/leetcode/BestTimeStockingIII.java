@@ -74,10 +74,6 @@ public class BestTimeStockingIII {
 	}
 	
 	private int bruteforce(int prices[]) {
-		int diff[] = new int[prices.length - 1];
-		for (int i = 1; i < prices.length; i++) {
-			diff[i - 1] = prices[i] - prices[i - 1];
-		}
 		int maxProfit = 0;
 		int len = prices.length;
 		for (int l = 1; l < len; l++) {
@@ -99,7 +95,7 @@ public class BestTimeStockingIII {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(new BestTimeStockingIII().maxProfit(new int[] {1,2,3,4,5}));
+		System.out.println(new BestTimeStockingIII().bruteforce(new int[] {1,2,4,2,5,7,2,4,9,0}));
 		System.out.println(new BestTimeStockingIII().maxDifference(new int[] {2,1,10,6,4,8,1}, 0, 7));
 	}
 

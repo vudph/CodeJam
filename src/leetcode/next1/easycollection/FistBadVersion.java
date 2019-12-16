@@ -36,11 +36,13 @@ public class FistBadVersion {
 	}
 	
 	private boolean isBadVersion(int i) {
-		return i == 4 ? true : false;
+		if (i == 3 || i == 4 || i == 7 || i == 9)
+    		return true;
+    	return false;
 	}
 
 	public static void main(String[] args) {
-		System.out.println(new FistBadVersion().firstBadVersion(5));
+		System.out.println(new FistBadVersion().firstBadVersion(10));
 	}
 
 }
