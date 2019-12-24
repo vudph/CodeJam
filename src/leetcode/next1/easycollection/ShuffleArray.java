@@ -34,8 +34,7 @@ public class ShuffleArray {
 
         for (int i = 0; i < array.length; i++) {
             int removeIdx = rand.nextInt(aux.size());
-            array[i] = aux.get(removeIdx);
-            aux.remove(removeIdx);
+            array[i] = aux.remove(removeIdx);
         }
         for (int i = 0; i < array.length; i++) {
 			System.out.print(array[i] + ",");
@@ -64,12 +63,17 @@ public class ShuffleArray {
 	public static void main(String[] args) {
 		ShuffleArray s = new ShuffleArray(new int[] {1,2,3});
 		s.shuffle0();
+//		System.out.println();
+//		s.shuffle0();
+//		System.out.println();
+//		s.shuffle0();
+//		System.out.println();
+//		s.shuffle0();
+		
 		System.out.println();
-		s.shuffle0();
-		System.out.println();
-		s.shuffle0();
-		System.out.println();
-		s.shuffle0();
+		Random rand = new Random();
+		System.out.println(rand.nextInt(5)); // [0->4]
+		System.out.println(rand.nextInt(5 - 2) + 2); // [2,4]
 	}
 
 }

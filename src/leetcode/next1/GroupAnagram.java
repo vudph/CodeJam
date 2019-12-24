@@ -1,4 +1,4 @@
-package leetcode.next1.medium;
+package leetcode.next1;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -3,45 +3,80 @@ package leetcode.next1.easycollection;
 import java.util.Stack;
 
 public class MinStack {
-	static class Node {
-		int data;
-		Node next;
-		int min;
-		Node(int data, int min) {
-			this.data = data;
-			this.next = null;
-			this.min = min;
-		}
-	}
-	Node head;
-	
-	public MinStack() {
-		this.head = null;
+	static class Item {
+        int val;
+        int min;
+        public Item(int v) {
+            this.val = v;
+        }
+    }
+    Stack<Item> stk = new Stack<>();
+
+    /** initialize your data structure here. */
+    public MinStack() {
+        
     }
     
     public void push(int x) {
-    	if (head == null) {
-    		head = new Node(x, x);
-    	} else {
-    		Node oldhead = head;
-    		head = new Node(x, Math.min(x, oldhead.min));
-    		head.next = oldhead;
-    	}
+        Item it = new Item(x);
+        if (stk.isEmpty()) {
+            it.min = x;
+        } else {
+            it.min = Math.min(x, stk.peek().min);            
+        }
+        stk.push(it);
     }
     
     public void pop() {
-        if (head != null) {
-        	head = head.next;
-        }
+        stk.pop();
     }
     
     public int top() {
-        return head.data;
+        return stk.peek().val;
     }
     
     public int getMin() {
-        return head.min;
+        return stk.peek().min;
     }
+//	static class Node {
+//		int data;
+//		Node next;
+//		int min;
+//		Node(int data, int min) {
+//			this.data = data;
+//			this.next = null;
+//			this.min = min;
+//		}
+//	}
+//	Node head;
+//	
+//	public MinStack() {
+//		this.head = null;
+//    }
+//    
+//    public void push(int x) {
+//    	if (head == null) {
+//    		head = new Node(x, x);
+//    	} else {
+//    		Node oldhead = head;
+//    		head = new Node(x, Math.min(x, oldhead.min));
+//    		head.next = oldhead;
+//    	}
+//    }
+//    
+//    public void pop() {
+//        if (head != null) {
+//        	head = head.next;
+//        }
+//    }
+//    
+//    public int top() {
+//        return head.data;
+//    }
+//    
+//    public int getMin() {
+//        return head.min;
+//    }
 	
 //	private Stack<Integer> primary = new Stack<>();
 //	private Stack<Integer> min = new Stack<>();

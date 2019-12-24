@@ -17,7 +17,8 @@ public class RemoveNthNodeFromEnd {
 	}
 	
 	public ListNode removeNthFromEnd(ListNode head, int n) {
-		ListNode p = removeHelper(head, new int[] {n});
+//		ListNode p = removeHelper(head, new int[] {n});
+		ListNode p = remove1Pass(head, n);
 		return p;
     }
 
@@ -34,6 +35,22 @@ public class RemoveNthNodeFromEnd {
 		}
 		return null;
 	}
+	
+	private ListNode remove1Pass(ListNode node, int n) {
+		ListNode first = node;
+		ListNode second = node;
+		for (int i = 0; i < n; i++)
+			first = first.next;
+		if (first == null) { // for case n == len of list
+			return second.next;
+		}
+		while (first.next != null) {
+			first = first.next;
+			second = second.next;
+		}
+		second.next = second.next.next;
+		return node;
+	}
 
 	public static void main(String[] args) {
 		ListNode head = new ListNode(1);
@@ -41,7 +58,8 @@ public class RemoveNthNodeFromEnd {
 		head.next.next = new ListNode(3);
 		head.next.next.next = new ListNode(4);
 		head.next.next.next.next = new ListNode(5);
-		new RemoveNthNodeFromEnd().removeNthFromEnd(head, 5);
+		head.next.next.next.next.next = new ListNode(6);
+		new RemoveNthNodeFromEnd().removeNthFromEnd(head, 8);
 	}
 
 }

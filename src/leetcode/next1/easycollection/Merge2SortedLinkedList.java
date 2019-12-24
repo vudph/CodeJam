@@ -1,7 +1,5 @@
 package leetcode.next1.easycollection;
 
-import leetcode.next1.easycollection.ReverseLinkedList.ListNode;
-
 public class Merge2SortedLinkedList {
 	static class ListNode {
 		int val;

@@ -1,0 +1,255 @@
+1) Backtracking
+letter combination
+2:abc, 3:def, 4:ghi, 5:jkl, 6:mno, 7:pqrs, 8: tuv, 9: wxyz
+Input: "23"
+Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"]
+
+Input: "234"
+Output: ["adg", "adh", "adi", ...
+
+a -> ad, ae, af
+b -> bd, be, bf
+c -> cd, ce, cf
+
+char[] phone[] = {"".toCharArray(), "".toCharArray(), 
+				  "abc".toCharArray(),
+				  "def".toCharArray(),
+				  "ghi".toCharArray(),
+				  "jkl".toCharArray(),
+				  "mno".toCharArray(),
+				  "pqrs".toCharArray(),
+				  "tuv".toCharArray(),
+				  "wxyz".toCharArray()
+				 }
+List<String> output = new ArrayList<>();
+
+public List<String> letterCombinations(String digits) {
+	backtracking(digits, "");
+	return output;
+}
+
+
+private void backtracking(String digits, String combination) {
+	if (digits.length() == 0) {
+		output.add(combination);
+		return;
+	}
+	String digit = digits.substring(0, 1);
+	for (int i = 0; i < phone[Integer.parseInt(digit)].length; i++) {		
+		backtracking(digits.substring(1), combination + phone[Integer.parseInt(digit)][i];);
+	}	
+}
+
+- All permutation
+"ABC" => "ABC", "ACB", "CAB",....
+A -> BA, AB -> CBA, BCA, BAC,
+
+public List<String> permuation(String s) {
+	backtracking(s, output);
+	return output;
+}
+
+private void backtracking(String s, List<String> perm) {
+	if (s.length() == 0) {
+		output = perm;
+		return;
+	}
+	String letter = s.substring(0, 1);
+	List<String> newperm = new ArrayList<>();
+	if (perm.isEmpty()) {
+		newperm.add(letter);
+	} else {
+		for (String p : perm) {
+			for (int i = 0; i <= p.length(); i++) {
+				String q = insertCharAt(i, letter.charAt(0), p);
+				newperm.add(q);
+			}
+		}
+	}
+		
+	backtracking(s.substring(1), newperm);
+}
+
+2) Topo
+/*
+Input:
+precursor steps: [["clean", "build"], ["metadata", "binary"], ["build", "link"], ["link", "binary"], ["clean", metadata"], ["build", "resources"]]
+
+Output:
+[["clean"], ["build", "metadata"], ["resources", "link"], ["binary"]]
+
+          clean
+         /     \
+      build    metadata
+      /   \        /        
+resources  link   /
+             \   /
+              binary
+              
+ */
+
+public class ParallelCourseII {
+
+	public List<List<String>> parallelSteps(List<List<String>> relations) {
+		Map<String, List<String>> adj = new HashMap<>();
+		Map<String, Integer> indegree = new HashMap<>();
+		for (List<String> rel : relations) {
+			if (adj.containsKey(rel.get(0)) {
+				adj.get(rel.get(0)).add(rel.get(1));
+			} else {
+				adj.put(rel.get(0), Arrays.asList(new String[]{rel.get(1)));
+			}
+			indegree.put(rel.get(1), indegree.getOrDefault(rel.get(0), 0) + 1);
+		}
+		Queue<String> q = new LinkedList<>();
+		Iterator<Entry<String, Integer>> iter = indegree.entrySet().iterator();
+		while (iter.hasNext()) {
+			Entry<String, Integer> entry = iter.next();
+			if (entry.getValue() == 0) {
+				q.offer(entry.getKey());
+			}
+		}
+		List<List<String>> res = new ArrayList<>();
+		while (!q.isEmpty()) {
+			List<String> subres = new ArrayList<>();
+			for (int i = q.size(); i > 0; i--) {
+				String u = q.poll();		
+				for (String v : adj.get(u)) {
+					indegree.put(v, indegree.get(v) - 1);
+					if (indegree.get(v) == 0) {
+						q.offer(v);
+					}
+				}
+				subres.add(u);
+			}
+			res.add(subres);					
+		}
+		return subres;
+	}
+	
+	public static void main(String[] args) {	
+		
+		new ParallelCourseII().parallelSteps(Arrays.asList(Arrays.asList("clean", "build"), Arrays.asList("metadata", "binary"), Arrays.asList("build", "link"), Arrays.asList("link", "binary"), Arrays.asList("clean", metadata"), Arrays.asList("build", "resources"), Arrays.asList("test", "metadata")));
+	}
+
+}
+
+
+3) HashMap
+- Longest subarray with equal 0's and 1's
+ex:  0  1  2  3  4  5  6  7  8
+     0, 1, 0, 1, 1, 1, 0, 1, 0 =>
+-1| -1  1 -1  1  1  1 -1  1 -1
+ 0| -1  0 -1  0  1  2  1  2  1 => sum
+
+public int longest01(int nums[]) {
+	Map<Integer, Integer> seen = new HashMap<>();
+	int sum = 0;
+	seen.put(sum, -1);
+	int maxLen = 0;
+	for (int i = 0; i < nums.length; i++) {
+		sum += nums[i] == 1 ? 1 : -1;
+		if (seen.containsKey(sum)) {
+			maxLen = Math.max(maxLen, i - seen.get(i));
+		} else {
+			seen.put(sum, i);
+		}
+	}
+	return maxLen;
+}
+
+-  Longest well-performed
+ex:  0  1  2  3  4  5  6  7  8  9 10 11 12 13 14
+     5, 7, 9, 9, 6, 0, 5, 5, 5, 6, 9, 9, 9, 9, 6
+-1| -1 -1  1  1 -1 -1 -1 -1 -1 -1  1  1  1  1 -1
+ 0| -1 -2 -1  0 -1 -2 -3 -4 -5 -6 -5 -4 -3 -2 -3
+
+public int longestWellPerforming(int nums[]) {
+	Map<Integer, Integer> seen = new HashMap<>();
+	int sum = 0;
+	int maxLen = 0;
+	seen.put(sum, -1);
+	for (int i = 0; i < nums.length; i++) {
+		sum += nums[i] > 8 ? 1 : -1;
+		if (sum > 0)
+			maxLen = i + 1;
+		if (!seen.containsKey(sum)) {
+			seen.put(sum, i);
+		}
+		if (seen.containsKey(sum - 1)) {
+			maxLen = Math.max(maxLen, i - seen.get(sum - 1));
+		} 
+	}
+	return maxLen;
+}
+
+- Longest subarray has sum = k
+ex:  0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15
+     5, 0, 8, 5, 2, 3, 0, 4, 3, 7, 3, 1, 1, 0, 3, 9, k=5
+	 5  5 13 18 20 23 23 27 30 37 40 41 42 42 45 54 
+	 
+public int longestSumK(int nums[], int k) {
+	Map<Integer, Integer> seen = new HashMap<>();
+	int sum = 0;
+	int maxLen = 0;
+	seen.put(sum, -1);
+	for (int i = 0; i < nums.length; i++) {
+		sum += nums[i];
+		if (seen.containsKey(sum - k)) {
+			maxLen = Math.max(maxLen, i - seen.get(sum - k));
+		} else {
+			seem.put(sum, i);
+		}
+	}
+	return maxLen;
+}
+
+- nums of subarray which has sum = k
+ex:   0  1  2  3  4  5  6  7  8  9 10 11 12 13 14
+      8, 5, 0, 2, 3, 0, 4, 3, 7, 3, 1, 1, 0, 3, 9, k=5
+	  8 13 13 15 18 18 22 25 32 35 36 37 37 40 49
+	  
+public int countSubarraySumK(int nums[], int k) {
+	Map<Integer, Integer> seen = new HashMap<>();
+	int sum = 0;
+	int cnt = 0;
+	seen(sum, 1);
+	for (int i = 0; i < nums.length; i++) {
+		sum += nums[i];
+		if (seen.containsKey(sum - k)) {
+			cnt+ = seen.get(sum - k);
+		}
+		seen.put(sum, seen.getOrDefault(sum, 0) + 1);
+	}
+	
+	
+	return cnt;
+}
+
+public int countSubarraySumKBruteforce(int nums[], int k) {
+	int cnt = 0;
+	for (int i = 0; i < nums.length; i++) {
+		int sum = 0;
+		for (int j = i; j < nums.length; j++) {
+			sum += nums[j];
+			if (sum == k) {
+				cnt++;
+			} else if (sum > k) {
+				break;
+			}
+		}
+	}
+	return cnt;
+}
+
+
+
+
+
+
+
+
+
+
+
+

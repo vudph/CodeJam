@@ -1,4 +1,4 @@
-package leetcode.next1.medium;
+package leetcode.next1;
 
 /*
 https://leetcode.com/explore/interview/card/top-interview-questions-medium/103/array-and-strings/779/
