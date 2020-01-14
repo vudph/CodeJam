@@ -12,16 +12,16 @@ public class ThreadInTerminated {
 				}
 			}
 		};
-
+		System.out.println(t.getState());
 		t.start();
-
+		System.out.println(t.getState());
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 
-		// Checking the state when thread is sleeping
+		// Checking the state of thread after its sleeping done
 
 		System.out.println(t.getState()); // Output : TERMINATED
 	}

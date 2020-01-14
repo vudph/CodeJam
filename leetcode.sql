@@ -164,6 +164,9 @@ select * from Person group by Email Having count(*) > 1;
 Delete From person
 where Id not in (select * from (select Min(Id) from person group by email) as tbl);
 
+delete from person
+where Id in (select * from (select e1.id from person e1 inner join person e2 on e1.email = e2.email where e1.id > e2.id) as t);
+
 #184. Department Highest Salary
 /*
 The Employee table holds all employees. Every employee has an Id, a salary, and there is also a column for the department Id.
@@ -224,52 +227,6 @@ Where (e.DepartmentId, e.Salary) in (Select DepartmentId, Max(Employee.Salary)
 									From Employee
 									Group by DepartmentId)
 Order by Department;
-
-#185. Department Top Three Salaries
-/*
-The Employee table holds all employees. Every employee has an Id, and there is also a column for the department Id.
-
-+----+-------+--------+--------------+
-| Id | Name  | Salary | DepartmentId |
-+----+-------+--------+--------------+
-| 1  | Joe   | 85000  | 1            |
-| 2  | Henry | 80000  | 2            |
-| 3  | Sam   | 60000  | 2            |
-| 4  | Max   | 90000  | 1            |
-| 5  | Janet | 69000  | 1            |
-| 6  | Randy | 85000  | 1            |
-| 7  | Will  | 70000  | 1            |
-+----+-------+--------+--------------+
-The Department table holds all departments of the company.
-
-+----+----------+
-| Id | Name     |
-+----+----------+
-| 1  | IT       |
-| 2  | Sales    |
-+----+----------+
-Write a SQL query to find employees who earn the top three salaries in each of the department. For the above tables, your SQL query should return the following rows (order of rows does not matter).
-
-+------------+----------+--------+
-| Department | Employee | Salary |
-+------------+----------+--------+
-| IT         | Max      | 90000  |
-| IT         | Randy    | 85000  |
-| IT         | Joe      | 85000  |
-| IT         | Will     | 70000  |
-| Sales      | Henry    | 80000  |
-| Sales      | Sam      | 60000  |
-+------------+----------+--------+
-Explanation:
-
-In IT department, Max earns the highest salary, both Randy and Joe earn the second highest salary, and Will earns the third highest salary. There are only two employees in the Sales department, Henry earns the highest salary while Sam earns the second highest salary.
-*/
-
-select departmentId, salary
-from employee
-group by departmentId
-order by departmentId, salary desc
-limit 1 offset 3;
 
 #619. Biggest Single Number
 /*
@@ -743,6 +700,19 @@ select distinct product_name, year, price
 from sales, product
 where sales.product_id = product.product_id;
 
+
+select p.product_name, s.year, s.price
+from 1068_product p
+join 1068_sales s
+on p.product_id = s.product_id
+group by p.product_id, year
+
+select p.product_name, t.year, t.price
+from (select distinct s.product_id, s.year, s.price from 1068_sales s) t 
+join 1068_product p
+on p.product_id = t.product_id
+
+
 #1251. Average Selling Price
 /*
 Table: Prices
@@ -943,9 +913,82 @@ Result table:
 */
 
 select u.user_id as buyer_id,  u.join_date, IFNULL(tbl.orders_in_2019, 0) as orders_in_2019
-from users u
+from 1158_users u
 left join (select buyer_id, count(*) as orders_in_2019
-            from orders
+            from 1158_orders
             where year(order_date) = '2019'
             group by buyer_id) tbl
 on u.user_id = tbl.buyer_id;
+
+select u.user_id as buyer_id, u.join_date, count(*) as orders_in_2019
+from 1158_users u Left Join 1158_orders o on u.user_id = o.buyer_id
+where year(o.order_date) = '2019'
+group by o.buyer_id 
+
+#185. Department Top Three Salaries
+/*sales
+The Employee table holds all employees. Every employee has an Id, and there is also a column for the department Id.
+
++----+-------+--------+--------------+
+| Id | Name  | Salary | DepartmentId |
++----+-------+--------+--------------+
+| 1  | Joe   | 85000  | 1            |
+| 2  | Henry | 80000  | 2            |
+| 3  | Sam   | 60000  | 2            |
+| 4  | Max   | 90000  | 1            |
+| 5  | Janet | 69000  | 1            |
+| 6  | Randy | 85000  | 1            |
+| 7  | Will  | 70000  | 1            |
++----+-------+--------+--------------+
+The Department table holds all departments of the company.
+
++----+----------+
+| Id | Name     |
++----+----------+
+| 1  | IT       |
+| 2  | Sales    |
++----+----------+
+Write a SQL query to find employees who earn the top three salaries in each of the department. For the above tables, your SQL query should return the following rows (order of rows does not matter).
+
++------------+----------+--------+
+| Department | Employee | Salary |
++------------+----------+--------+
+| IT         | Max      | 90000  |
+| IT         | Randy    | 85000  |
+| IT         | Joe      | 85000  |
+| IT         | Will     | 70000  |
+| Sales      | Henry    | 80000  |
+| Sales      | Sam      | 60000  |
++------------+----------+--------+
+Explanation:
+
+In IT department, Max earns the highest salary, both Randy and Joe earn the second highest salary, and Will earns the third highest salary. There are only two employees in the Sales department, Henry earns the highest salary while Sam earns the second highest salary.
+*/
+
+select e1.Name as 'Employee', e1.Salary
+from Employee e1
+where 3 >
+(
+    select count(distinct e2.Salary)
+    from Employee e2
+    where e2.Salary > e1.Salary
+)
+
+
+
+Select d.City, Count(d.City) as 'Number of Donors'
+From jb_Donor d, jb_Acceptor a
+Where d.City = a.City and d.BG = a.BG and d.Amount >= a.Amount
+Group by d.City;
+
+
+
+select ID, FIRST_NAME, LAST_NAME, (LENGTH(FIRST_NAME) + LENGTH(LAST_NAME)) as len
+From Technosoft
+Where (LENGTH(FIRST_NAME) + LENGTH(LAST_NAME)) < 12
+Order By (LENGTH(FIRST_NAME) + LENGTH(LAST_NAME)), CONCAT(LAST_NAME, ' ', ) DESC, ID ASC;
+
+Select ID, FIRST_NAME, LAST_NAME
+From Technosoft
+Having (LENGTH(FIRST_NAME) + LENGTH(LAST_NAME)) < 12
+Order By (LENGTH(FIRST_NAME) + LENGTH(LAST_NAME)), CONCAT(FIRST_NAME, ' ', LAST_NAME), ID;

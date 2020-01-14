@@ -50,5 +50,7 @@ public class NotifyTest {
 			}
 		};
 		t4.start();
+		
+		// after thread t1 got notified and process, the program sill hanging since there are other thread still waiting to be notified => use notifiyAll
 	}
 }

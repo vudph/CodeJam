@@ -13,6 +13,9 @@ public class Notifier implements Runnable {
 		System.out.println(threadName + " started");
 		synchronized (msg) {
 			msg.setMsg(threadName + " work done");
+			for (int i = 0; i < 10; i++) {
+				msg.increaseCounter();
+			}
 			msg.notify();
 		}
 	}

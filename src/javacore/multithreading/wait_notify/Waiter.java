@@ -19,6 +19,9 @@ public class Waiter implements Runnable {
 			}
 			System.out.println(threadName + " got notified");
 			System.out.println(threadName + " processing: " + msg.getMsg());
+			for (int i = 0; i < 5; i++) {
+				msg.increaseCounter();
+			}
 		}
 	}
 

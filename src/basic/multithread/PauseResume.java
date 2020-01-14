@@ -53,9 +53,10 @@ public class PauseResume {
 
 	private void allowPause() {
 		synchronized (lock) {
-			while (paused) {
+			if (paused) {
 				try {
 					lock.wait();
+					System.out.println("got notified, paused: " + paused);
 				} catch (InterruptedException e) {
 					// nothing
 				}
