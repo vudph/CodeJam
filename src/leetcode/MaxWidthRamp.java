@@ -22,7 +22,11 @@ public class MaxWidthRamp {
         for (int i = 0; i < N; ++i)
             B[i] = i;
 
-        Arrays.sort(B, (i, j) -> ((Integer) A[i]).compareTo(A[j]));
+//        Arrays.sort(B, (i, j) -> ((Integer) A[i]).compareTo(A[j]));
+
+        Arrays.sort(B, (i, j) -> {
+        	return ((Integer) A[i]).compareTo(A[j]);
+        });
         
         int minEle = B[0];
         for (int i = 1; i < B.length; i++) {

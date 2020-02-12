@@ -992,3 +992,8 @@ Select ID, FIRST_NAME, LAST_NAME
 From Technosoft
 Having (LENGTH(FIRST_NAME) + LENGTH(LAST_NAME)) < 12
 Order By (LENGTH(FIRST_NAME) + LENGTH(LAST_NAME)), CONCAT(FIRST_NAME, ' ', LAST_NAME), ID;
+
+Select u.id, r.id, u.name, r.name, ur.user_id, ur.role_id 
+From nplus1_user u left outer join nplus1_user_role ur on u.id=ur.user_id left outer join nplus1_role r on ur.role_id=r.id
+carsemployee
+

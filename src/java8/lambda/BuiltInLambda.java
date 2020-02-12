@@ -1,6 +1,10 @@
 package java8.lambda;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -31,6 +35,15 @@ public class BuiltInLambda {
 		BuiltInLambda l = new BuiltInLambda();
 		List<Employee> e = l.getEmployeesBySalary(60000);
 		
-		System.out.println();
+		int array[] = new int[]{1,2,3,4};
+
+		int sum = Arrays.stream(array).reduce(0, (n1, n2) -> n1 + n2);
+		System.out.println(sum);
+		OptionalInt min = Arrays.stream(array).min();
+		System.out.println(min.getAsInt());
+		List<Integer> list = Arrays.asList(2, 4, 1, 3, 7, 5, 9, 6, 8);
+		 
+        Optional<Integer> minNumber = list.stream().min((i, j) -> i.compareTo(j));
+		System.out.println(minNumber);
 	}
 }
